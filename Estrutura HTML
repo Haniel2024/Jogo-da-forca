@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Palavras - Jogo da Forca</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro de Palavras</h1>
+        <form action="../controllers/WordController.php" method="post">
+            <label for="word">Palavra:</label>
+            <input type="text" id="word" name="word" required>
+            <button type="submit">Salvar</button>
+        </form>
+        <a href="index.php">Voltar ao Início</a>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início - Jogo da Forca</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-vindo ao Jogo da Forca</h1>
+        <a href="game.php" class="btn">Iniciar Novo Jogo</a>
+        <a href="add_word.php" class="btn">Cadastrar Nova Palavra</a>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Forca</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Jogo da Forca</h1>
+        <div id="game-container">
+            <div id="word"></div>
+            <div id="hangman"></div>
+            <form id="guess-form" action="../controllers/GameController.php" method="post">
+                <label for="letter">Letra:</label>
+                <input type="text" id="letter" name="letter" maxlength="1" required>
+                <button type="submit">Enviar</button>
+            </form>
+            <div id="message"></div>
+        </div>
+        <a href="index.php">Voltar ao Início</a>
+    </div>
+</body>
+</html>
