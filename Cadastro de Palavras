@@ -1,0 +1,6 @@
+<!-- views/add_word.php -->
+<form action="../controllers/WordController.php" method="post">
+    <label for="word">Palavra:</label>
+    <input type="text" id="word" name="word" required>
+    <button type="submit">Salvar</button>
+</form>
