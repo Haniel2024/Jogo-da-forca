@@ -1,0 +1,23 @@
+jogo-da-forca/
+├── assets/
+│   ├── css/
+│   │   └── styles.css
+│   ├── js/
+│   │   └── script.js
+├── db/
+│   └── database.sqlite
+├── src/
+│   ├── classes/
+│   │   └── Database.php
+│   ├── controllers/
+│   │   ├── GameController.php
+│   │   └── WordController.php
+│   ├── models/
+│   │   ├── Game.php
+│   │   └── Word.php
+├── views/
+│   ├── add_word.php
+│   ├── index.php
+│   └── game.php
+├── .gitignore
+└── README.md
