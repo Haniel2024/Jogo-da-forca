@@ -1,0 +1,9 @@
+<!-- views/index.php -->
+<a href="game.php">Iniciar Novo Jogo</a>
+// views/game.php
+require_once '../controllers/GameController.php';
+$gameController = new GameController();
+$word = $gameController->startGame();
+$maskedWord = str_repeat('_ ', strlen($word));
+
+echo "<div>$maskedWord</div>";
