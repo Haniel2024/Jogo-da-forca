@@ -4,3 +4,38 @@
     <input type="text" id="word" name="word" required>
     <button type="submit">Salvar</button>
 </form>
+// src/controllers/WordController.php
+require_once '../classes/Database.php';
+require_once '../models/Word.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $word = $_POST['word'];
+    $wordModel = new Word();
+    $wordModel->save($word);
+    header('Location: ../views/add_word.php');
+}
+// src/models/Word.php
+class Word {
+    private $pdo;
+
+    public function __construct() {
+        $this->pdo = Database::getInstance()->getConnection();
+        $this->createTable();
+    }
+
+    private function createTable() {
+        $this->pdo->exec("CREATE TABLE IF NOT EXISTS words (
+            id INTEGER PRIMARY KEY,
+            word TEXT UNIQUE,
+            times_played INTEGER DEFAULT 0,
+            times_won INTEGER DEFAULT 0,
+            times_lost INTEGER DEFAULT 0
+        )");
+    }
+
+    public function save($word) {
+        $stmt = $this->pdo->prepare("INSERT INTO words (word) VALUES (:word)");
+        $stmt->bindParam(':word', $word);
+        $stmt->execute();
+    }
+}
