@@ -1,0 +1,44 @@
+<!-- views/game.php -->
+<form action="../controllers/GameController.php" method="post">
+    <label for="letter">Letra:</label>
+    <input type="text" id="letter" name="letter" maxlength="1" required>
+    <button type="submit">Enviar</button>
+</form>
+// src/controllers/GameController.php
+require_once '../classes/Database.php';
+require_once '../models/Game.php';
+
+class GameController {
+    private $game;
+
+    public function __construct() {
+        $this->game = new Game();
+    }
+
+    public function startGame() {
+        return $this->game->start();
+    }
+
+    public function handleGuess($letter) {
+        // Lógica para processar a letra e atualizar o estado do jogo
+    }
+}
+// src/models/Game.php
+class Game {
+    private $pdo;
+
+    public function __construct() {
+        $this->pdo = Database::getInstance()->getConnection();
+    }
+
+    public function start() {
+        $stmt = $this->pdo->query("SELECT word FROM words ORDER BY RANDOM() LIMIT 1");
+        $word = $stmt->fetchColumn();
+        // Inicialize o estado do jogo aqui
+        return $word;
+    }
+
+    public function handleGuess($letter) {
+        // Lógica para processar a letra e atualizar o estado do jogo
+    }
+}
