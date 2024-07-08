@@ -1,0 +1,27 @@
+// assets/js/script.js
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('guess-form');
+    const letterInput = document.getElementById('letter');
+    const messageDiv = document.getElementById('message');
+    const timer = document.getElementById('timer');
+    let timeLeft = 60; // Timer set to 60 seconds
+
+    form.addEventListener('submit', function(event) {
+        if (letterInput.value.length !== 1) {
+            event.preventDefault();
+            messageDiv.textContent = 'Por favor, insira apenas uma letra.';
+        }
+    });
+
+    function updateTimer() {
+        if (timeLeft > 0) {
+            timeLeft--;
+            timer.textContent = `Tempo restante: ${timeLeft}s`;
+        } else {
+            messageDiv.textContent = 'Tempo esgotado! Você perdeu.';
+            form.querySelector('button').disabled = true;
+        }
+    }
+
+    setInterval(updateTimer, 1000);
+});
