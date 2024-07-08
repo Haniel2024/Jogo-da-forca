@@ -1,0 +1,13 @@
+// assets/js/script.js
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('guess-form');
+    const letterInput = document.getElementById('letter');
+    const messageDiv = document.getElementById('message');
+
+    form.addEventListener('submit', function(event) {
+        if (letterInput.value.length !== 1) {
+            event.preventDefault();
+            messageDiv.textContent = 'Por favor, insira apenas uma letra.';
+        }
+    });
+});
