@@ -1,0 +1,72 @@
+// src/controllers/GameController.php
+require_once '../classes/Database.php';
+require_once '../models/Game.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    session_start();
+    $letter = $_POST['letter'];
+    $game = $_SESSION['game'];
+    $game->handleGuess($letter);
+    $_SESSION['game'] = $game;
+    header('Location: ../views/game.php');
+    exit;
+}
+
+class GameController {
+    public function startGame() {
+        session_start();
+        $game = new Game();
+        $_SESSION['game'] = $game;
+        return $game->getMaskedWord();
+    }
+}
+// src/models/Game.php
+class Game {
+    private $pdo;
+    private $word;
+    private $maskedWord;
+    private $attempts;
+    private $maxAttempts;
+
+    public function __construct() {
+        $this->pdo = Database::getInstance()->getConnection();
+        $this->attempts = 0;
+        $this->maxAttempts = 6;  // Quantidade máxima de erros permitidos
+        $this->initializeGame();
+    }
+
+    private function initializeGame() {
+        $stmt = $this->pdo->query("SELECT word FROM words ORDER BY RANDOM() LIMIT 1");
+        $this->word = $stmt->fetchColumn();
+        $this->maskedWord = str_repeat('_ ', strlen($this->word));
+    }
+
+    public function getMaskedWord() {
+        return $this->maskedWord;
+    }
+
+    public function handleGuess($letter) {
+        $positions = [];
+        for ($i = 0; $i < strlen($this->word); $i++) {
+            if ($this->word[$i] === $letter) {
+                $positions[] = $i;
+            }
+        }
+
+        if (empty($positions)) {
+            $this->attempts++;
+        } else {
+            foreach ($positions as $pos) {
+                $this->maskedWord[$pos * 2] = $letter;
+            }
+        }
+
+        // Verificação do fim do jogo
+        if ($this->attempts >= $this->maxAttempts) {
+            $_SESSION['message'] = 'Você perdeu!';
+        } elseif (strpos($this->maskedWord, '_') === false) {
+            $_SESSION['message'] = 'Você ganhou!';
+        }
+    }
+}
+
